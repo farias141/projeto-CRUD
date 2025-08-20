@@ -66,6 +66,8 @@ def add_product():
     
     return render_template("add.html")
 
+
+#continuar daqui
 @app.route("/edit/<int:id>", methods=["GET", "POST"])
 def edit_product(id):
     conn = get_db_connection()
