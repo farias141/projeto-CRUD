@@ -76,7 +76,34 @@ def edit_product(id):
 
     if not produto:
         flash("produto não encontrado!", "error")
-        return
+        return redirect(url_for("home"))
+
+    if request.method == "POST":
+        nome = request.form["nome"].strip()
+        preco = request.form["preco"].replace(",",".").strip()
+
+        try:
+            preco = float(preco)
+            conn.execute(
+                "UPDATE produtos SET nome = ?, preco = ? WHERE id = ?", (nome, preco, id) )
+            conn.commit()
+            flash("produto atualizado com sucesso!", "success")
+
+        except exception:
+            flash("Erro ao atualizar. verifique os dados,", "error")
+
+        conn.close()
+
+        return redirect(url_for("home"))
+
+    conn.close()
+    return render_template("edit.html", produto=produto)
+
+
+
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)
