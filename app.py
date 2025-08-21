@@ -91,7 +91,7 @@ def edit_product(id):
             conn.commit()
             flash("produto atualizado com sucesso!", "success")
 
-        except exception:
+        except Exception:
             flash("Erro ao atualizar. verifique os dados,", "error")
 
         conn.close()
