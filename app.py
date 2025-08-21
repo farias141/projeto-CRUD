@@ -101,7 +101,27 @@ def edit_product(id):
     conn.close()
     return render_template("edit.html", produto=produto)
 
+@app.route("/delete/<int:id>", methods=["POST","GET"])
+def delete_product(id):
+    conn = get_db_connection()
 
+    produto = conn.execute("SELECT * FROM produtos WHERE id = ?", (id,)).fetchone()
+
+    if not produto:
+        flash("produto não encontrado!", "error")
+        return redirect(url_for("home"))
+    
+    if request.method == "POST":
+        conn.execute("DELETE FROM produtos WHERE id = ?", (id,))
+        conn.commit()
+        conn.close()
+        flash("produto excluido com sucesso!", "success")
+        return redirect(url_for("home"))
+    
+    conn.close()
+    return render_template("delete.html", produto=produto)
 
 if __name__ == "__main__":
+    init_db()
     app.run(debug=True)
+

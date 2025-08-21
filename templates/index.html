@@ -22,6 +22,14 @@
                     <td>{{ p["id"] }}</td>
                     <td>{{ p["nome"] }}</td>
                     <td class="text-right">{{ '%.2f'|format((p['preco']|float)) }}</td>
+
+                    <td class="text-center">
+                        <a href="/edit/{{['id'] }}" class="btn btn-sm btn-primary">Editar</a>
+
+                        <a 
+                        class="btn btn--small btn--danger" 
+                        href="{{ url_for('delete_product', id=p ['id']) }}">Excluir</a>
+                    </td>
                 </tr>
                 {% else %}
 
